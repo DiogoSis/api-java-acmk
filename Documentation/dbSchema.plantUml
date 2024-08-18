@@ -1,0 +1,72 @@
+@startuml
+' Diagrama de Banco de Dados
+entity "Alunos" as alunos {
+  +id_aluno : SERIAL
+  *primeiro_nome : VARCHAR(50)
+  *sobrenome : VARCHAR(50)
+  *data_nascimento : DATE
+  *genero : CHAR(1)
+  telefone : VARCHAR(15)
+  email : VARCHAR(100)
+  endereco : VARCHAR(255)
+  *data_entrada : DATE
+  *cor_faixa : VARCHAR(20)
+}
+
+entity "Instrutores" as instrutores {
+  +id_instrutor : SERIAL
+  *primeiro_nome : VARCHAR(50)
+  *sobrenome : VARCHAR(50)
+  *data_nascimento : DATE
+  telefone : VARCHAR(15)
+  email : VARCHAR(100)
+  *cor_faixa : VARCHAR(20)
+  *data_contratacao : DATE
+}
+
+entity "Aulas" as aulas {
+  +id_aula : SERIAL
+  *nome_aula : VARCHAR(100)
+  descricao : TEXT
+  *hora_inicio : TIME
+  *hora_fim : TIME
+  *dia_semana : VARCHAR(10)
+}
+
+entity "Matrículas" as matriculas {
+  +id_matricula : SERIAL
+  *id_aluno : INT
+  *id_aula : INT
+  *data_matricula : DATE
+}
+
+entity "Pagamentos" as pagamentos {
+  +id_pagamento : SERIAL
+  *id_aluno : INT
+  *valor : NUMERIC(10, 2)
+  *data_pagamento : DATE
+  *metodo_pagamento : VARCHAR(50)
+}
+
+entity "Eventos" as eventos {
+  +id_evento : SERIAL
+  *nome_evento : VARCHAR(100)
+  *data_evento : DATE
+  *local : VARCHAR(255)
+  descricao : TEXT
+}
+
+entity "Participações em Eventos" as participacoes_eventos {
+  +id_participacao : SERIAL
+  *id_aluno : INT
+  *id_evento : INT
+  *data_participacao : DATE
+}
+
+alunos -- matriculas : "Contém"
+aulas -- matriculas : "Inclui"
+alunos -- pagamentos : "Realiza"
+eventos -- participacoes_eventos : "Tem"
+alunos -- participacoes_eventos : "Participa"
+
+@enduml
